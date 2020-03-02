@@ -1,5 +1,6 @@
 #!/bin/bash
 
+file=$1
 last_changed=`< /sys/class/power_supply/BAT0/capacity`
 
 while true
@@ -8,7 +9,7 @@ do
 
 	if [[ "$last_changed" != "$current" ]]
 	then
-		echo "$current"
+		./create.sh $file $current
 		last_changed=$current
 	fi
 	sleep 5
