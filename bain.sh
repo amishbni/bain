@@ -17,8 +17,27 @@ create_and_set() {
 	feh --bg-scale background.png
 }
 
+find_battery_path() {
+	local file
+	for file in /sys/class/power_supply/*; do
+	    read power_supply < "$file"/type
+	    if [ "$power_supply" = "Battery" ]; then
+		declare -r battery_found=1
+		echo "$file"
+		break
+	    fi
+	done
+
+	if [ -z "$battery_found" ]; then
+		echo "Couldn't find battery"
+		exit 1
+	fi
+
+}
+
 file=$1
-last_changed=`< /sys/class/power_supply/BAT0/capacity`
+battery_path=$(find_battery_path)
+last_changed=`< $battery_path/capacity`
 create_and_set $file $last_changed
 
 while true
