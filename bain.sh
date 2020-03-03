@@ -2,7 +2,7 @@
 
 file=$1
 last_changed=`< /sys/class/power_supply/BAT0/capacity`
-$HOME/code/bain/create.sh $file $last_changed
+$HOME/bain/create.sh $file $last_changed
 
 while true
 do
@@ -10,7 +10,7 @@ do
 
 	if [[ "$last_changed" != "$current" ]]
 	then
-		$HOME/code/bain/create.sh $file $current
+		$HOME/bain/create.sh $file $current
 		last_changed=$current
 	fi
 	sleep 5
