@@ -14,7 +14,7 @@ create_and_set() {
 
 	convert $orig out.png -gravity Center -composite -background '#2E3440' -gravity Center -extent 3840x2160 background.png
 
-	feh --bg-scale background.png
+	feh --no-fehbg --bg-scale background.png
 }
 
 find_battery_path() {
@@ -42,7 +42,7 @@ create_and_set $file $last_changed
 
 while true
 do
-	current=`< /sys/class/power_supply/BAT0/capacity`
+	current=`< $battery_path/capacity`
 
 	if [[ "$last_changed" != "$current" ]]
 	then
