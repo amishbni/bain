@@ -35,7 +35,6 @@ find_battery_path() {
 
 }
 
-<<<<<<< HEAD
 cat_help() {
 		cat <<EOF
 Usage: ./bain.sh [-h] [-b BATTERY] [-c COLOR_CHARGE] [-u COLOR_UNCHARGE] IMAGE
