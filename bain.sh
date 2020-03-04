@@ -35,6 +35,7 @@ find_battery_path() {
 
 }
 
+<<<<<<< HEAD
 cat_help() {
 		cat <<EOF
 Usage: ./bain.sh [-h] [-b BATTERY] [-c COLOR_CHARGE] [-u COLOR_UNCHARGE] IMAGE
@@ -48,7 +49,6 @@ EOF
 		exit
 }
 
-file=
 COLOR_CHARGE='#5BC236'
 COLOR_UNCHARGE='#BF131C'
 
@@ -58,7 +58,7 @@ while [ "$#" -gt 0 ]; do
 		-b|--battery) battery_path="$2"; shift 2;;
 		-c|--charge) COLOR_CHARGE="$2"; shift 2;;
 		-u|--uncharge) COLOR_UNCHARGE="$2"; shift 2;;
-		*) file="$1"; shift 1;;
+		*) file="$HOME/bain/images/$1.png"; shift 1;;
 	esac
 done
 
@@ -72,6 +72,7 @@ do
 
 	if [[ "$last_changed" != "$current" ]]
 	then
+		echo $current
 		create_and_set $file $current
 		last_changed=$current
 	fi
