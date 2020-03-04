@@ -1,18 +1,23 @@
 #!/bin/bash
 
 create_and_set() {
-	orig=$1
-	perc=$2
-	size=`identify -format '%wx%h' $orig`
+	original_image=$1
+	battery_percentage=$2
+	battery_status=$3
+	image_size=`identify -format '%wx%h' $original_image`
 
-	if [ "$perc" -ge 30 ]; then
-		color=$COLOR_CHARGE
+	if [[ "$battery_status" == "Charging" ]]; then
+		color='#FFFF00'
 	else
-		color=$COLOR_UNCHARGE
+		if [ "$perc" -ge 30 ]; then
+			color=$COLOR_CHARGE
+		else
+			color=$COLOR_UNCHARGE
+		fi
 	fi
-	convert $orig -gravity South -crop x$perc% -fuzz 50% -fill $color -opaque '#8FBCBB' -background transparent -extent $size out.png
+	convert $original_image -gravity South -crop x$battery_percentage% -fuzz 50% -fill $color -opaque '#8FBCBB' -background transparent -extent $image_size out.png
 
-	convert $orig out.png -gravity Center -composite -background '#2E3440' -gravity Center -extent 3840x2160 background.png
+	convert $original_image out.png -gravity Center -composite -background '#2E3440' -gravity Center -extent 3840x2160 background.png
 
 	feh --no-fehbg --bg-scale background.png
 }
@@ -65,18 +70,21 @@ while [ "$#" -gt 0 ]; do
 done
 
 [ -z "$battery_path" ] && battery_path=$(find_battery_path)
-last_changed=`< $battery_path/capacity`
-create_and_set $file $last_changed
+last_capacity=`< $battery_path/capacity`
+last_status=`< $battery_path/status`
+create_and_set $file $last_capacity $last_status
 
 while true
 do
-	current=`< $battery_path/capacity`
+	current_capacity=`< $battery_path/capacity`
+	current_status=`< $battery_path/status`
 
-	if [[ "$last_changed" != "$current" ]]
+	if [[ "$current_capacity" != "$last_capacity" ]] || [[ "$current_status" != "$last_status" ]]
 	then
-		echo $current
-		create_and_set $file $current
-		last_changed=$current
+		echo $current_capacity
+		create_and_set $file $current_capacity $current_status
+		last_capacity=$current_capacity
+		last_status=$current_status
 	fi
 	sleep $REFRESH
 done
