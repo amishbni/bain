@@ -6,10 +6,10 @@ create_and_set() {
 	battery_status=$3
 	image_size=`identify -format '%wx%h' $original_image`
 
-	if [[ "$battery_status" == "Charging" ]]; then
+	if [[ "$battery_status" == "Charging" ]] && [[ "$COLOR_CHARGING" != "n" ]]; then
 		color=$COLOR_CHARGING
 	else
-		if [ "$perc" -ge 30 ]; then
+		if [ "$battery_percentage" -ge 30 ]; then
 			color=$COLOR_CHARGE
 		else
 			color=$COLOR_UNCHARGE
@@ -47,7 +47,7 @@ Usage: ./bain.sh [-h] [-b BATTERY] [-c COLOR_CHARGE] [-g COLOR_CHARGING] [-u COL
   -h, --help                        print this message and exits
   -b, --battery BATTERY             the battery of the computer, if not set the programm will try to find it automatically
   -c, --charge COLOR_CHARGE         color for charge battery, defualt #5BC236
-  -g, --charging COLOR_CHARGING     color for charging battery, default #FFFF00
+  -g, --charging COLOR_CHARGING     color for charging battery, if value is 'n' charging will not affect the color, default #FFFF00
   -u, --uncharge COLOR_UNCHARGE     color for uncharge battery, defualt #BF131C
   -r, --refresh REFRESH             refresh speed, defualt 5 seconds
   IMAGE                             the image to use for the background
