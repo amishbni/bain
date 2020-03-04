@@ -28,3 +28,6 @@ $HOME/bain/bain.sh $HOME/bain/Nord.png &
 ```
 
 * Restart your X session (log out and log back in).
+```bash
+pkill X
+```
