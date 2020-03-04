@@ -49,7 +49,7 @@ create_and_set $file $last_changed $last_status
 while true
 do
 	current=`< $battery_path/capacity`
-	_status=`< $battery_path/status`
+	_status=`< $battery_path/status` # can not use $status because it is reserved
 
 	if [[ "$last_changed" != "$current" ]] || [[ "$_status" != "$last_status" ]]
 	then
