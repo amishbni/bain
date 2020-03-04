@@ -35,7 +35,7 @@ find_battery_path() {
 
 }
 
-file=$1
+file="$HOME/bain/images/$1.png"
 battery_path=$(find_battery_path)
 last_changed=`< $battery_path/capacity`
 create_and_set $file $last_changed
@@ -46,6 +46,7 @@ do
 
 	if [[ "$last_changed" != "$current" ]]
 	then
+		echo $current
 		create_and_set $file $current
 		last_changed=$current
 	fi
