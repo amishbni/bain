@@ -1,6 +1,7 @@
 # bain - the battery indicator
 
 ![Arch Example](example/Arch.png)
+<sup>\*green: discharge, yellow: charge, red: battery percentage < 30%</sup>
 
 ## How to use?
 
