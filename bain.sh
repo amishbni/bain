@@ -35,7 +35,8 @@ find_battery_path() {
 
 }
 
-file="$HOME/bain/images/$1.png"
+SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+file="$SCRIPTPATH/images/$1.png"
 battery_path=$(find_battery_path)
 last_changed=`< $battery_path/capacity`
 create_and_set $file $last_changed
