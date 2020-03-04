@@ -15,11 +15,11 @@ create_and_set() {
 			color='#BF131C'
 		fi
 	fi
-	convert $original_image -gravity South -crop x$battery_percentage% -fuzz 50% -fill $color -opaque '#8FBCBB' -background transparent -extent $image_size out.png
+	convert $original_image -gravity South -crop x$battery_percentage% -fuzz 50% -fill $color -opaque '#8FBCBB' -background transparent -extent $image_size $tmp_folder/out.png
 
-	convert $original_image out.png -gravity Center -composite -background '#2E3440' -gravity Center -extent 3840x2160 background.png
+	convert $original_image $tmp_folder/out.png -gravity Center -composite -background '#2E3440' -gravity Center -extent 3840x2160 $tmp_folder/background.png
 
-	feh --no-fehbg --bg-scale background.png
+	feh --no-fehbg --bg-scale $tmp_folder/background.png
 }
 
 find_battery_path() {
@@ -39,6 +39,9 @@ find_battery_path() {
 	fi
 
 }
+
+tmp_folder=/tmp/bain
+mkdir -p $tmp_folder
 
 file="$HOME/bain/images/$1.png"
 battery_path=$(find_battery_path)
