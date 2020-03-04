@@ -22,7 +22,7 @@ cd bain
 chmod +x bain.sh
 ```
 
-* Run the code from your startup file (e.g. `.xinitrc`). Make sure to use `&` at the end of the file as it is a blocking script.
+* Run the script from your startup file (e.g. `.xinitrc`). Make sure to use `&` at the end of the file as it is a blocking script.
 ```bash
 $HOME/bain/bain.sh $HOME/bain/Nord.png &
 ```
