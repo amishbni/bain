@@ -3,12 +3,17 @@
 create_and_set() {
 	orig=$1
 	perc=$2
+	status=$3
 	size=`identify -format '%wx%h' $orig`
 
-	if [ "$perc" -ge 30 ]; then
-		color='#5BC236'
+	if [[ "$status" == "Charging" ]]; then
+		color='#FFFF00'
 	else
-		color='#BF131C'
+		if [ "$perc" -ge 30 ]; then
+			color='#5BC236'
+		else
+			color='#BF131C'
+		fi
 	fi
 	convert $orig -gravity South -crop x$perc% -fuzz 50% -fill $color -opaque '#8FBCBB' -background transparent -extent $size out.png
 
@@ -38,16 +43,19 @@ find_battery_path() {
 file=$1
 battery_path=$(find_battery_path)
 last_changed=`< $battery_path/capacity`
-create_and_set $file $last_changed
+last_status=`< $battery_path/status`
+create_and_set $file $last_changed $last_status
 
 while true
 do
 	current=`< $battery_path/capacity`
+	_status=`< $battery_path/status`
 
-	if [[ "$last_changed" != "$current" ]]
+	if [[ "$last_changed" != "$current" ]] || [[ "$_status" != "$last_status" ]]
 	then
-		create_and_set $file $current
+		create_and_set $file $current $_status
 		last_changed=$current
+		last_status=$status
 	fi
 	sleep 5
 done
