@@ -29,7 +29,7 @@ cd bain
 chmod +x bain.sh
 ```
 
-* Run the script from your startup file (e.g. `.xinitrc`). Make sure to use `&` at the end of the command as it is a blocking script.
+* Run the script from your startup file (e.g. `~/.config/bunsen/autostart`). Make sure to use `&` at the end of the command as it is a blocking script.
 ```bash
 $HOME/bain/bain.sh bunsenlabs &
 ```
