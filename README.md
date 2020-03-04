@@ -8,7 +8,7 @@
 * Install `imagemagick` and `feh`, because this program uses them
 
 ```bash
-sudo pacman -S imagemagick feh
+sudo apt install imagemagick feh
 ```
 
 * Make sure you're in `$HOME` directory
@@ -31,7 +31,7 @@ chmod +x bain.sh
 
 * Run the script from your startup file (e.g. `.xinitrc`). Make sure to use `&` at the end of the command as it is a blocking script.
 ```bash
-$HOME/bain/bain.sh arch &
+$HOME/bain/bain.sh bunsenlabs &
 ```
 
 * Restart your X session (log out and log back in).
