@@ -4,6 +4,12 @@
 
 ## How to use?
 
+* Install `imagemagick` and `feh`, because this program uses them
+
+```bash
+sudo pacman -S imagemagick feh
+```
+
 * Make sure you're in `$HOME` directory
 
 ```bash
