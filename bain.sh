@@ -7,7 +7,7 @@ create_and_set() {
 	image_size=`identify -format '%wx%h' $original_image`
 
 	if [[ "$battery_status" == "Charging" ]]; then
-		color='#FFFF00'
+		color=$COLOR_CHARGING
 	else
 		if [ "$perc" -ge 30 ]; then
 			color=$COLOR_CHARGE
@@ -42,13 +42,14 @@ find_battery_path() {
 
 cat_help() {
 		cat <<EOF
-Usage: ./bain.sh [-h] [-b BATTERY] [-c COLOR_CHARGE] [-u COLOR_UNCHARGE] IMAGE
+Usage: ./bain.sh [-h] [-b BATTERY] [-c COLOR_CHARGE] [-g COLOR_CHARGING] [-u COLOR_UNCHARGE] [-r REFRESH] IMAGE
 
   -h, --help                        print this message and exits
   -b, --battery BATTERY             the battery of the computer, if not set the programm will try to find it automatically
   -c, --charge COLOR_CHARGE         color for charge battery, defualt #5BC236
+  -g, --charging COLOR_CHARGING     color for charging battery, default #FFFF00
   -u, --uncharge COLOR_UNCHARGE     color for uncharge battery, defualt #BF131C
-  -r, --refresh                     refresh speed, defualt 5 seconds
+  -r, --refresh REFRESH             refresh speed, defualt 5 seconds
   IMAGE                             the image to use for the background
 EOF
 		exit
@@ -56,6 +57,7 @@ EOF
 
 REFRESH=5
 COLOR_CHARGE='#5BC236'
+COLOR_CHARGING='#FFFF00'
 COLOR_UNCHARGE='#BF131C'
 
 while [ "$#" -gt 0 ]; do
@@ -63,6 +65,7 @@ while [ "$#" -gt 0 ]; do
 		-h|--help) cat_help; shift;;
 		-b|--battery) battery_path="$2"; shift 2;;
 		-c|--charge) COLOR_CHARGE="$2"; shift 2;;
+		-g|--charging) COLOR_CHARGING="$2"; shift 2;;
 		-u|--uncharge) COLOR_UNCHARGE="$2"; shift 2;;
 		-r|--refresh) REFRESH="$2"; shift 2;;
 		*) file="$HOME/bain/images/$1.png"; shift 1;;
