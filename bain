@@ -40,7 +40,7 @@ find_battery_path() {
 
 }
 
-file="$HOME/bain/images/$1.png"
+file="$HOME/.bain/images/$1.png"
 battery_path=$(find_battery_path)
 last_capacity=`< $battery_path/capacity`
 last_status=`< $battery_path/status`
