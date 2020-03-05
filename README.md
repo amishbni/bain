@@ -5,33 +5,28 @@
 
 ## How to use?
 
-* Install `imagemagick` and `feh`, because this program uses them
+* Make sure you have these programs installed on your machine: [git](https://git-scm.com/), [imagemagick](https://imagemagick.org), and [feh](https://feh.finalrewind.org).
+
+* Clone the repository into ~/.bain
 
 ```bash
-sudo pacman -S imagemagick feh
+git clone https://github.com/amirashabani/bain ~/.bain
 ```
 
-* Make sure you're in `$HOME` directory
+* Make it executable
 
 ```bash
-cd
+chmod +x ~/.bain/bain
 ```
 
-* Clone the repository, and `cd` into it
-
+* Copy it to `/usr/local/bin`, so that the command is recognized by your terminal. Make sure to run it with `sudo`.
 ```bash
-git clone https://github.com/amirashabani/bain
-cd bain
-```
-
-* Make the script executable
-```bash
-chmod +x bain.sh
+sudo cp ~/.bain/bain /usr/local/bin
 ```
 
 * Run the script from your startup file (e.g. `.xinitrc`). Make sure to use `&` at the end of the command as it is a blocking script.
 ```bash
-$HOME/bain/bain.sh arch &
+bain arch &
 ```
 
 * Restart your X session (log out and log back in).
