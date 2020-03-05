@@ -15,11 +15,11 @@ create_and_set() {
 			color=$COLOR_UNCHARGE
 		fi
 	fi
-	convert $original_image -gravity South -crop x$battery_percentage% -fuzz 50% -fill $color -opaque '#8FBCBB' -background transparent -extent $image_size out.png
+	convert $original_image \
+		\( +clone -gravity South -crop x$battery_percentage% -fuzz 50% -fill $color -opaque '#8FBCBB' -background transparent -extent $image_size \) \
+		-gravity Center -composite -background '#2E3440' -extent 3840x2160 $HOME/.bain/background.png
 
-	convert $original_image out.png -gravity Center -composite -background '#2E3440' -gravity Center -extent 3840x2160 background.png
-
-	feh --no-fehbg --bg-scale background.png
+	feh --no-fehbg --bg-scale $HOME/.bain/background.png
 }
 
 find_battery_path() {
@@ -68,7 +68,7 @@ while [ "$#" -gt 0 ]; do
 		-g|--charging) COLOR_CHARGING="$2"; shift 2;;
 		-u|--uncharge) COLOR_UNCHARGE="$2"; shift 2;;
 		-r|--refresh) REFRESH="$2"; shift 2;;
-		*) file="$HOME/bain/images/$1.png"; shift 1;;
+		*) file="$HOME/.bain/images/$1.png"; shift 1;;
 	esac
 done
 
@@ -84,7 +84,6 @@ do
 
 	if [[ "$current_capacity" != "$last_capacity" ]] || [[ "$current_status" != "$last_status" ]]
 	then
-		echo $current_capacity
 		create_and_set $file $current_capacity $current_status
 		last_capacity=$current_capacity
 		last_status=$current_status
