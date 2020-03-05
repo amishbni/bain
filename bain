@@ -15,9 +15,9 @@ create_and_set() {
 			color='#BF131C'
 		fi
 	fi
-	convert $original_image -gravity South -crop x$battery_percentage% -fuzz 50% -fill $color -opaque '#8FBCBB' -background transparent -extent $image_size $HOME/.bain/out.png
-
-	convert $original_image $HOME/.bain/out.png -gravity Center -composite -background '#2E3440' -gravity Center -extent 3840x2160 $HOME/.bain/background.png
+	convert $original_image \
+		\( +clone -gravity South -crop x$battery_percentage% -fuzz 50% -fill $color -opaque '#8FBCBB' -background transparent -extent $image_size \) \
+		-gravity Center -composite -background '#2E3440' -extent 3840x2160 $HOME/.bain/background.png
 
 	feh --no-fehbg --bg-scale $HOME/.bain/background.png
 }
@@ -53,7 +53,6 @@ do
 
 	if [[ "$current_capacity" != "$last_capacity" ]] || [[ "$current_status" != "$last_status" ]]
 	then
-		echo $current_capacity
 		create_and_set $file $current_capacity $current_status
 		last_capacity=$current_capacity
 		last_status=$current_status
