@@ -5,7 +5,7 @@
 
 ## How to use?
 
-* Make sure you have these program installed on your machine: [git](https://git-scm.com/),, [imagemagick](https://imagemagick.org), [feh](https://feh.finalrewind.org).
+* Make sure you have these programs installed on your machine: [git](https://git-scm.com/), [imagemagick](https://imagemagick.org), and [feh](https://feh.finalrewind.org).
 
 * Clone the repository into ~/.bain
 
@@ -19,7 +19,7 @@ git clone https://github.com/amirashabani/bain ~/.bain
 chmod +x ~/.bain/bain
 ```
 
-* Copy it to /usr/local/bin, so that the command is recognized by your terminal. Make sure to run it with `sudo`.
+* Copy it to `/usr/local/bin`, so that the command is recognized by your terminal. Make sure to run it with `sudo`.
 ```bash
 sudo cp ~/.bain/bain /usr/local/bin
 ```
