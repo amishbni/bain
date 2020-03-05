@@ -7,7 +7,7 @@
 
 * Make sure you have these programs installed on your machine: [git](https://git-scm.com/), [imagemagick](https://imagemagick.org), and [feh](https://feh.finalrewind.org).
 
-* Clone the repository into ~/.bain
+* Clone the repository into `~/.bain`
 
 ```bash
 git clone https://github.com/amirashabani/bain ~/.bain
