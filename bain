@@ -6,13 +6,13 @@ create_and_set() {
 	battery_status=$3
 	image_size=`identify -format '%wx%h' $original_image`
 
-	if [[ "$battery_status" == "Charging" ]]; then
-		color='#FFFF00'
+	if [[ "$battery_status" == "Charging" ]] && [[ "$COLOR_CHARGING" != "n" ]]; then
+		color=$COLOR_CHARGING
 	else
 		if [ "$battery_percentage" -ge 30 ]; then
-			color='#5BC236'
+			color=$COLOR_CHARGE
 		else
-			color='#BF131C'
+			color=$COLOR_UNCHARGE
 		fi
 	fi
 	convert $original_image \
@@ -40,11 +40,42 @@ find_battery_path() {
 
 }
 
+cat_help() {
+		cat <<EOF
+Usage: ./bain.sh [-h] [-b BATTERY] [-c COLOR_CHARGE] [-g COLOR_CHARGING] [-u COLOR_UNCHARGE] [-r REFRESH] IMAGE
+
+  -h, --help                        print this message and exits
+  -b, --battery BATTERY             the battery of the computer, if not set the programm will try to find it automatically
+  -c, --charge COLOR_CHARGE         color for charge battery, defualt #5BC236
+  -g, --charging COLOR_CHARGING     color for charging battery, if value is 'n' charging will not affect the color, default #FFFF00
+  -u, --uncharge COLOR_UNCHARGE     color for uncharge battery, defualt #BF131C
+  -r, --refresh REFRESH             refresh speed, defualt 5 seconds
+  IMAGE                             the image to use for the background
+EOF
+		exit
+}
+
+REFRESH=5
+COLOR_CHARGE='#5BC236'
+COLOR_CHARGING='#FFFF00'
+COLOR_UNCHARGE='#BF131C'
+
+while [ "$#" -gt 0 ]; do
+	case "$1" in
+		-h|--help) cat_help; shift;;
+		-b|--battery) battery_path="$2"; shift 2;;
+		-c|--charge) COLOR_CHARGE="$2"; shift 2;;
+		-g|--charging) COLOR_CHARGING="$2"; shift 2;;
+		-u|--uncharge) COLOR_UNCHARGE="$2"; shift 2;;
+		-r|--refresh) REFRESH="$2"; shift 2;;
+		*) file="$HOME/.bain/images/$1.png"; shift 1;;
+	esac
+done
+
 tmp_directory=/tmp/bain
 mkdir -p $tmp_directory
 
-file="$HOME/.bain/images/$1.png"
-battery_path=$(find_battery_path)
+[ -z "$battery_path" ] && battery_path=$(find_battery_path)
 last_capacity=`< $battery_path/capacity`
 last_status=`< $battery_path/status`
 create_and_set $file $last_capacity $last_status
@@ -60,5 +91,5 @@ do
 		last_capacity=$current_capacity
 		last_status=$current_status
 	fi
-	sleep 5
+	sleep $REFRESH
 done
